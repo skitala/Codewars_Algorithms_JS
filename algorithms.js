@@ -564,20 +564,28 @@
 // "Give me liberty or give me death"  --> "Gml0gmd"
 // "Keep Calm and Carry On"            --> "KCaC0"
 
-const makePassword = (phrase) => {
-  const password = phrase
+// const makePassword = (phrase) => {
+//   const password = phrase
+//     .split(" ")
+//     .map((c) => {
+//       let password = "";
+//       let firstChar = c[0];
+//       if (firstChar === "i" || firstChar === "I") firstChar = 1;
+//       if (firstChar === "o" || firstChar === "O") firstChar = 0;
+//       if (firstChar === "s" || firstChar === "S") firstChar = 5;
+//       password += firstChar;
+//       return password;
+//     })
+//     .join("");
+//   console.log(password);
+//   return password;
+// };
+
+const makePassword = (phrase) =>
+  phrase
     .split(" ")
-    .map((c) => {
-      let password = "";
-      let firstChar = c[0];
-      if (firstChar === "i" || firstChar === "I") firstChar = 1;
-      if (firstChar === "o" || firstChar === "O") firstChar = 0;
-      if (firstChar === "s" || firstChar === "S") firstChar = 5;
-      password += firstChar;
-      return password;
-    })
-    .join("");
-  console.log(password);
-  return password;
-};
+    .map((el) => el[0])
+    .join("")
+    .replace(/[iso]/gi, (x) => ({ i: 1, s: 5, o: 0 }[x.toLowerCase()]));
+
 makePassword("Give me liberty or give me death");
