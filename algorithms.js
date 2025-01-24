@@ -482,61 +482,102 @@
 // The order of the queue NEVER changes, and
 // The front person in the queue (i.e. the first element in the array/list) proceeds to a till as soon as it becomes free.
 
-function queueTime(customers, n) {
-  let maxTime = customers.reduce((a, c) => a + c, 0);
-  let remainingTime = maxTime;
-  if (n > 1) {
-    let tills = [];
-    for (let i = 0; i < n; i++) {
-      tills.push(0);
-    }
-    // First 'wave'
-    for (let i = 0; i < n; i++) {
-      tills[i] = customers[i];
-    }
-    let busyTills = tills.slice(0, customers.length);
-    let remainingCustomers = customers.slice(n, customers.length);
-    while (maxTime > 0) {
-      busyTills = busyTills.map((t, i) => {
-        t--;
-        if (t === 0) {
-          let next = remainingCustomers.shift();
-          return next ? (t = next) : true;
-        } else {
-          return (busyTills[i] = t);
-        }
-      });
-      remainingTime--;
-      let areCustomersDone = busyTills.every((t) => t === true);
-      if (areCustomersDone) {
-        console.log(maxTime - remainingTime);
-        return maxTime - remainingTime;
-      }
-    }
-  }
-  console.log(maxTime);
-  return maxTime;
+// function queueTime(customers, n) {
+//   let maxTime = customers.reduce((a, c) => a + c, 0);
+//   let remainingTime = maxTime;
+//   if (n > 1) {
+//     let tills = [];
+//     for (let i = 0; i < n; i++) {
+//       tills.push(0);
+//     }
+//     // First 'wave'
+//     for (let i = 0; i < n; i++) {
+//       tills[i] = customers[i];
+//     }
+//     let busyTills = tills.slice(0, customers.length);
+//     let remainingCustomers = customers.slice(n, customers.length);
+//     while (maxTime > 0) {
+//       busyTills = busyTills.map((t, i) => {
+//         t--;
+//         if (t === 0) {
+//           let next = remainingCustomers.shift();
+//           return next ? (t = next) : true;
+//         } else {
+//           return (busyTills[i] = t);
+//         }
+//       });
+//       remainingTime--;
+//       let areCustomersDone = busyTills.every((t) => t === true);
+//       if (areCustomersDone) {
+//         console.log(maxTime - remainingTime);
+//         return maxTime - remainingTime;
+//       }
+//     }
+//   }
+//   console.log(maxTime);
+//   return maxTime;
 
-  // Senior solutions :D
-  // var w = new Array(n).fill(0);
-  // for (let t of customers) {
-  //   let idx = w.indexOf(Math.min(...w));
-  //   w[idx] += t;
-  // }
-  // return Math.max(...w);
+//   // Senior solutions :D
+//   // var w = new Array(n).fill(0);
+//   // for (let t of customers) {
+//   //   let idx = w.indexOf(Math.min(...w));
+//   //   w[idx] += t;
+//   // }
+//   // return Math.max(...w);
 
-  // or this
-  // if (customers.length == 0) return 0;
-  // if (customers.length <= n) return Math.max(...customers);
-  // if (customers.length > n) {
-  //   let residue = customers.slice(n);
-  //   let firsts = customers.slice(0, n);
-  //   for (let item of residue) {
-  //     firsts.sort((a, b) => b - a);
-  //     firsts[firsts.length - 1] += item;
-  //   }
-  //   return Math.max(...firsts);
-  // }
-}
+//   // or this
+//   // if (customers.length == 0) return 0;
+//   // if (customers.length <= n) return Math.max(...customers);
+//   // if (customers.length > n) {
+//   //   let residue = customers.slice(n);
+//   //   let firsts = customers.slice(0, n);
+//   //   for (let item of residue) {
+//   //     firsts.sort((a, b) => b - a);
+//   //     firsts[firsts.length - 1] += item;
+//   //   }
+//   //   return Math.max(...firsts);
+//   // }
+// }
 
-queueTime([1, 2, 3, 4], 2);
+// queueTime([1, 2, 3, 4], 2);
+
+// You are given an odd-length array of integers, in which all of them are the same, except for one single number.
+// Complete the method which accepts such an array, and returns that single different number.
+// The input array will always be valid! (odd-length >= 3)
+// Examples
+// [1, 1, 2] ==> 2
+// [17, 17, 3, 17, 17, 17, 17] ==> 3
+// function stray(numbers) {
+//   const sorted = numbers.sort();
+//   return sorted[numbers.length - 1] === sorted[numbers.length - 2]
+//     ? sorted[0]
+//     : sorted[numbers.length - 1];
+// }
+// stray([1, 1, 2]);
+
+// One suggestion to build a satisfactory password is to start with a memorable phrase or sentence and make a password by extracting the first letter of each word.
+// Even better is to replace some of those letters with numbers (e.g., the letter O can be replaced with the number 0):
+// instead of including i or I put the number 1 in the password;
+// instead of including o or O put the number 0 in the password;
+// instead of including s or S put the number 5 in the password.
+// Examples:
+// "Give me liberty or give me death"  --> "Gml0gmd"
+// "Keep Calm and Carry On"            --> "KCaC0"
+
+const makePassword = (phrase) => {
+  const password = phrase
+    .split(" ")
+    .map((c) => {
+      let password = "";
+      let firstChar = c[0];
+      if (firstChar === "i" || firstChar === "I") firstChar = 1;
+      if (firstChar === "o" || firstChar === "O") firstChar = 0;
+      if (firstChar === "s" || firstChar === "S") firstChar = 5;
+      password += firstChar;
+      return password;
+    })
+    .join("");
+  console.log(password);
+  return password;
+};
+makePassword("Give me liberty or give me death");
