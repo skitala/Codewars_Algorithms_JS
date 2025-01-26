@@ -581,11 +581,50 @@
 //   return password;
 // };
 
-const makePassword = (phrase) =>
-  phrase
-    .split(" ")
-    .map((el) => el[0])
-    .join("")
-    .replace(/[iso]/gi, (x) => ({ i: 1, s: 5, o: 0 }[x.toLowerCase()]));
+// const makePassword = (phrase) =>
+//   phrase
+//     .split(" ")
+//     .map((el) => el[0])
+//     .join("")
+//     .replace(/[iso]/gi, (x) => ({ i: 1, s: 5, o: 0 }[x.toLowerCase()]));
 
-makePassword("Give me liberty or give me death");
+// makePassword("Give me liberty or give me death");
+
+// Create an identity matrix of the specified size ( >= 0 ).
+// Some examples:
+// (1)  =>  [[1]]
+// (2) =>   [[1,0],
+//          [0,1] ]
+//          [[1,0,0,0,0],
+//          [0,1,0,0,0],
+// (5) =>   [0,0,1,0,0],
+//          [0,0,0,1,0],
+//          [0,0,0,0,1] ]
+
+const getMatrix = (number) => {
+  let matrixArray = [];
+
+  for (let i = 0; i < number; i++) {
+    let matrixRow = [];
+
+    for (let y = 0; y < number; y++) {
+      matrixRow.push(0);
+    }
+
+    matrixRow[i] = 1;
+    matrixArray.push(matrixRow);
+  }
+
+  return matrixArray;
+};
+
+function getMatrix(number) {
+  const matrix = [];
+  for (let i = 0; i < number; i++) {
+    matrix[i] = Array(number).fill(0);
+    matrix[i][i] = 1;
+  }
+  return matrix;
+}
+
+getMatrix(5);
