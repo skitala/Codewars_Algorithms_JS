@@ -601,30 +601,173 @@
 //          [0,0,0,1,0],
 //          [0,0,0,0,1] ]
 
-const getMatrix = (number) => {
-  let matrixArray = [];
+// const getMatrix = (number) => {
+//   let matrixArray = [];
 
-  for (let i = 0; i < number; i++) {
-    let matrixRow = [];
+//   for (let i = 0; i < number; i++) {
+//     let matrixRow = [];
 
-    for (let y = 0; y < number; y++) {
-      matrixRow.push(0);
+//     for (let y = 0; y < number; y++) {
+//       matrixRow.push(0);
+//     }
+
+//     matrixRow[i] = 1;
+//     matrixArray.push(matrixRow);
+//   }
+
+//   return matrixArray;
+// };
+
+// function getMatrix(number) {
+//   const matrix = [];
+//   for (let i = 0; i < number; i++) {
+//     matrix[i] = Array(number).fill(0);
+//     matrix[i][i] = 1;
+//   }
+//   return matrix;
+// }
+
+//getMatrix(5);
+
+// Ready! Set! Fire... but where should you fire?
+
+// The battlefield is 3x3 wide grid. HQ has already provided you with an array for easier computing:
+
+// ["top left",    "top middle",    "top right",
+//  "middle left", "center",        "middle right",
+//  "bottom left", "bottom middle", "bottom right"]
+// HQ radios you with 'x' and 'y' coordinates. x=0 y=0 being 'top left' part of the battlefield;
+
+// Your duty is to create a function that takes those Xs and Ys and return the correct grid sector to be hit.
+
+// x = 0, y = 0 --> "top left"
+// x = 1, y = 2 --> "bottom middle"
+// etc
+
+// function fire(x, y) {
+//   const grid = [
+//     ["top left", "top middle", "top right"],
+//     ["middle left", "center", "middle right"],
+//     ["bottom left", "bottom middle", "bottom right"],
+//   ];
+
+//   const cooredinatesResult = grid[y][x];
+//   console.log(cooredinatesResult);
+
+//   return cooredinatesResult;
+// }
+// fire(1, 2);
+
+// In this kata you are expected to recover a scattered password in a (m x n) grid (you'll be given directions of all password pieces in the array)
+// The array will contain pieces of the password to be recovered, you'll get directions on how to get all the the pieces, your initial position in the array will be the character "x".
+// Heres what the array looks like
+// [
+//   ["p", "x", "m"],
+//   ["a", "$", "$"],
+//   ["k", "i", "t"]
+// ]
+// The given directions would consist of [left, right, up, down] and [leftT, rightT, upT, downT], the former would be used to move around the grid while the latter would be used when you have a password to that direction of you.( E.g if you are in a position and the move to make is leftT it means theres a password to the left of you, so take the value and move there)
+// So in the 2d array example above, you will be given the directions ["lefT", "downT", "rightT", "rightT"], making for the word "pa$$".
+// Remember you initial position is the character "x".
+// So you write the function getPassword(grid, directions) that uses the directions to get a password in the grid.
+// Another example.
+// grid = [
+//   ["a", "x", "c"],
+//   ["g", "l", "t"],
+//   ["o", "v", "e"]
+// ];
+// directions = ["downT", "down", "leftT", "rightT", "rightT", "upT"]
+// getPassword(grid, directions) // => "lovet"
+// Once again, Your initial position is the character "x", so from the position of "x" you follow the directions given and get all pieces in the grid.
+
+function getPassword(grid, directions) {
+  let currentRow = 0;
+  let currentIndex = 0;
+  let positions = [];
+  var password = "";
+
+  for (i = 0; i < grid.length; i++) {
+    for (y = 0; y < grid[i].length; y++) {
+      if (grid[i][y] === "x") {
+        currentRow = i;
+        currentIndex = y;
+      }
     }
-
-    matrixRow[i] = 1;
-    matrixArray.push(matrixRow);
   }
 
-  return matrixArray;
-};
+  directions.forEach((element) => {
+    let row = currentRow;
+    let index = currentIndex;
+    const direction = processDirection(element, row, index);
+    positions.push(direction);
+    currentRow = direction[1];
+    currentIndex = direction[0];
+  });
 
-function getMatrix(number) {
-  const matrix = [];
-  for (let i = 0; i < number; i++) {
-    matrix[i] = Array(number).fill(0);
-    matrix[i][i] = 1;
+  if (positions.length > 0) {
+    positions.forEach((p) => {
+      if (p[2]) {
+        const letter = grid[p[1]][p[0]];
+        password += letter;
+      }
+    });
   }
-  return matrix;
+
+  function processDirection(direction, row, index) {
+    let i = index;
+    let r = row;
+    let take = false;
+
+    switch (direction) {
+      case "left":
+        i--;
+        break;
+      case "right":
+        i++;
+        break;
+      case "up":
+        r--;
+        break;
+      case "down":
+        r++;
+        break;
+      case "leftT":
+        i--;
+        take = true;
+        break;
+      case "rightT":
+        i++;
+        take = true;
+        break;
+      case "upT":
+        r--;
+        take = true;
+        break;
+      case "downT":
+        r++;
+        take = true;
+        break;
+      default:
+        break;
+    }
+    return [i, r, take];
+  }
+  console.log(positions);
+  console.log(password);
 }
-
-getMatrix(5);
+const grid = [
+  ["x", "l", "m"],
+  ["o", "f", "c"],
+  ["k", "i", "t"],
+];
+const directions = [
+  "rightT",
+  "down",
+  "leftT",
+  "right",
+  "rightT",
+  "down",
+  "left",
+  "leftT",
+];
+getPassword(grid, directions);
