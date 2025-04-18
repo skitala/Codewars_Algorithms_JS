@@ -770,4 +770,43 @@ const directions = [
   "left",
   "leftT",
 ];
+function getPassword(grid, directions) {
+  const dir = { right: 1, left: -1, up: -3, down: 3 };
+  grid = grid.flat();
+  let initPos = grid.indexOf("x");
+
+  return directions.reduce((acc, cur) => {
+    if (!cur.includes("T")) {
+      initPos += dir[cur];
+    } else {
+      initPos += dir[cur.slice(0, -1)];
+      acc += grid[initPos];
+    }
+    return acc;
+  }, "");
+}
+
 getPassword(grid, directions);
+
+// Your task, is to create N×N multiplication table, of size provided in parameter.
+
+// For example, when given size is 3:
+
+// 1 2 3
+// 2 4 6
+// 3 6 9
+// function multiplicationTable(size) {
+//   let firstRow = []
+//   let array = []
+//   for(let i = 1; i <= size; i++){
+//     let range = [];
+//     range.push(i);
+//     firstRow.push(range);
+//   }
+//   for(let x = 1; x <= size; x++){
+//     let nextRow = firstRow.map(n => n * x)
+//     array.push(nextRow);
+//   }
+//   console.log(array);
+//   return array;
+// }
