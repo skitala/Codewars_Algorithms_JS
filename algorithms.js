@@ -680,113 +680,113 @@
 // getPassword(grid, directions) // => "lovet"
 // Once again, Your initial position is the character "x", so from the position of "x" you follow the directions given and get all pieces in the grid.
 
-function getPassword(grid, directions) {
-  let currentRow = 0;
-  let currentIndex = 0;
-  let positions = [];
-  var password = "";
+// function getPassword(grid, directions) {
+//   let currentRow = 0;
+//   let currentIndex = 0;
+//   let positions = [];
+//   var password = "";
 
-  for (i = 0; i < grid.length; i++) {
-    for (y = 0; y < grid[i].length; y++) {
-      if (grid[i][y] === "x") {
-        currentRow = i;
-        currentIndex = y;
-      }
-    }
-  }
+//   for (i = 0; i < grid.length; i++) {
+//     for (y = 0; y < grid[i].length; y++) {
+//       if (grid[i][y] === "x") {
+//         currentRow = i;
+//         currentIndex = y;
+//       }
+//     }
+//   }
 
-  directions.forEach((element) => {
-    let row = currentRow;
-    let index = currentIndex;
-    const direction = processDirection(element, row, index);
-    positions.push(direction);
-    currentRow = direction[1];
-    currentIndex = direction[0];
-  });
+//   directions.forEach((element) => {
+//     let row = currentRow;
+//     let index = currentIndex;
+//     const direction = processDirection(element, row, index);
+//     positions.push(direction);
+//     currentRow = direction[1];
+//     currentIndex = direction[0];
+//   });
 
-  if (positions.length > 0) {
-    positions.forEach((p) => {
-      if (p[2]) {
-        const letter = grid[p[1]][p[0]];
-        password += letter;
-      }
-    });
-  }
+//   if (positions.length > 0) {
+//     positions.forEach((p) => {
+//       if (p[2]) {
+//         const letter = grid[p[1]][p[0]];
+//         password += letter;
+//       }
+//     });
+//   }
 
-  function processDirection(direction, row, index) {
-    let i = index;
-    let r = row;
-    let take = false;
+//   function processDirection(direction, row, index) {
+//     let i = index;
+//     let r = row;
+//     let take = false;
 
-    switch (direction) {
-      case "left":
-        i--;
-        break;
-      case "right":
-        i++;
-        break;
-      case "up":
-        r--;
-        break;
-      case "down":
-        r++;
-        break;
-      case "leftT":
-        i--;
-        take = true;
-        break;
-      case "rightT":
-        i++;
-        take = true;
-        break;
-      case "upT":
-        r--;
-        take = true;
-        break;
-      case "downT":
-        r++;
-        take = true;
-        break;
-      default:
-        break;
-    }
-    return [i, r, take];
-  }
-  console.log(positions);
-  console.log(password);
-}
-const grid = [
-  ["x", "l", "m"],
-  ["o", "f", "c"],
-  ["k", "i", "t"],
-];
-const directions = [
-  "rightT",
-  "down",
-  "leftT",
-  "right",
-  "rightT",
-  "down",
-  "left",
-  "leftT",
-];
-function getPassword(grid, directions) {
-  const dir = { right: 1, left: -1, up: -3, down: 3 };
-  grid = grid.flat();
-  let initPos = grid.indexOf("x");
+//     switch (direction) {
+//       case "left":
+//         i--;
+//         break;
+//       case "right":
+//         i++;
+//         break;
+//       case "up":
+//         r--;
+//         break;
+//       case "down":
+//         r++;
+//         break;
+//       case "leftT":
+//         i--;
+//         take = true;
+//         break;
+//       case "rightT":
+//         i++;
+//         take = true;
+//         break;
+//       case "upT":
+//         r--;
+//         take = true;
+//         break;
+//       case "downT":
+//         r++;
+//         take = true;
+//         break;
+//       default:
+//         break;
+//     }
+//     return [i, r, take];
+//   }
+//   console.log(positions);
+//   console.log(password);
+// }
+// const grid = [
+//   ["x", "l", "m"],
+//   ["o", "f", "c"],
+//   ["k", "i", "t"],
+// ];
+// const directions = [
+//   "rightT",
+//   "down",
+//   "leftT",
+//   "right",
+//   "rightT",
+//   "down",
+//   "left",
+//   "leftT",
+// ];
+// function getPassword(grid, directions) {
+//   const dir = { right: 1, left: -1, up: -3, down: 3 };
+//   grid = grid.flat();
+//   let initPos = grid.indexOf("x");
 
-  return directions.reduce((acc, cur) => {
-    if (!cur.includes("T")) {
-      initPos += dir[cur];
-    } else {
-      initPos += dir[cur.slice(0, -1)];
-      acc += grid[initPos];
-    }
-    return acc;
-  }, "");
-}
+//   return directions.reduce((acc, cur) => {
+//     if (!cur.includes("T")) {
+//       initPos += dir[cur];
+//     } else {
+//       initPos += dir[cur.slice(0, -1)];
+//       acc += grid[initPos];
+//     }
+//     return acc;
+//   }, "");
+// }
 
-getPassword(grid, directions);
+// getPassword(grid, directions);
 
 // Your task, is to create N×N multiplication table, of size provided in parameter.
 
@@ -819,35 +819,127 @@ getPassword(grid, directions);
 // uniqueInOrder('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
 // uniqueInOrder([1,2,2,3,3])       == [1,2,3]
 
-var uniqueInOrder = function (iterable) {
-  let strArray;
-  if (typeof iterable[0] === "number") {
-    strArray = iterable;
-  } else if (
-    Array.isArray(iterable) &&
-    iterable.every((item) => typeof item === "string")
-  ) {
-    strArray = iterable;
-  } else {
-    strArray = iterable.split("");
-  }
-  let result = [];
-  strArray.forEach((c, i) => {
-    let arr = [];
-    if (i === strArray.length) {
-      return;
-    }
-    let newArr = [];
-    if (strArray[i] !== strArray[i + 1]) {
-      newArr.push(strArray[i]);
-      result.push(newArr);
+// var uniqueInOrder = function (iterable) {
+//   let strArray;
+//   if (typeof iterable[0] === "number") {
+//     strArray = iterable;
+//   } else if (
+//     Array.isArray(iterable) &&
+//     iterable.every((item) => typeof item === "string")
+//   ) {
+//     strArray = iterable;
+//   } else {
+//     strArray = iterable.split("");
+//   }
+//   let result = [];
+//   strArray.forEach((c, i) => {
+//     let arr = [];
+//     if (i === strArray.length) {
+//       return;
+//     }
+//     let newArr = [];
+//     if (strArray[i] !== strArray[i + 1]) {
+//       newArr.push(strArray[i]);
+//       result.push(newArr);
+//     }
+//   });
+//   console.log(iterable);
+//   return result.map((c) => c[0]);
+// };
+
+// // better solution :D
+// var uniqueInOrder = function (iterable) {
+//   return [...iterable].filter((a, i) => a !== iterable[i - 1]);
+// };
+
+// In this kata, your task is to create all permutations of a non-empty input string and remove duplicates, if present.
+// Create as many "shufflings" as you can!
+
+// Examples:
+
+// With input 'a':
+// Your function should return: ['a']
+// With input 'ab':
+// Your function should return ['ab', 'ba']
+// With input 'abc':
+// Your function should return ['abc','acb','bac','bca','cab','cba']
+// With input 'aabb':
+// Your function should return ['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']
+// Note: The order of the permutations doesn't matter.
+// function permutations(string) {
+//   const strLength = string.length;
+//   let permutations = [];
+//   permutations.push([...string]);
+//   let innerIndex = strLength - 1;
+//   if (strLength === 1) {
+//     return [string];
+//   }
+//   for (let z = 0; z < strLength; z++) {
+//     innerIndex--;
+//     for (let y = strLength; y >= 0; y--) {
+//       if (innerIndex === 0) {
+//         for (let y = 0; y <= strLength; y++) {
+//           let permutation = [...string];
+//           permutation[innerIndex + strLength] = string[y];
+//           permutation[y] = string[innerIndex + strLength];
+//           let newPerm = permutation;
+//           permutations.push(newPerm);
+//         }
+//       }
+//       // } else {
+//       console.log(y);
+//       let current = y;
+//       let permutationIndex = innerIndex;
+//       let permutation = [...string];
+//       permutation[permutationIndex] = string[current];
+//       permutation[current] = string[permutationIndex];
+
+//       let newPerm = permutation;
+//       permutations.push(newPerm);
+//       console.log(current);
+//       console.log(permutation);
+//       console.log(permutationIndex);
+//       console.log(newPerm);
+//       console.log(strLength);
+//     }
+//     // }
+//   }
+//   let r = new Set(
+//     permutations.filter((p) => p.length === strLength).map((p) => p.join(""))
+//   );
+//   console.log([...r].filter((p) => p.length === strLength));
+
+//   return [...r].filter((p) => p.length === strLength).sort();
+// }
+// permutations("ab");
+
+// Count the number of Duplicates
+// Write a function that will return the count of distinct case-insensitive alphabetic characters and numeric digits that occur more than once in the input string. The input string can be assumed to contain only alphabets (both uppercase and lowercase) and numeric digits.
+// Example
+// "abcde" -> 0 # no characters repeats more than once
+// "aabbcde" -> 2 # 'a' and 'b'
+// "aabBcde" -> 2 # 'a' occurs twice and 'b' twice (`b` and `B`)
+// "indivisibility" -> 1 # 'i' occurs six times
+// "Indivisibilities" -> 2 # 'i' occurs seven times and 's' occurs twice
+// "aA11" -> 2 # 'a' and '1'
+// "ABBA" -> 2 # 'A' and 'B' each occur twice
+
+function duplicateCount(text) {
+  let duplicateIdxs = [];
+  const txtArray = text.toLowerCase().split("");
+  txtArray.forEach((c) => {
+    let firstIdx = txtArray.indexOf(c);
+    let lastIdx = txtArray.lastIndexOf(c);
+    console.log(firstIdx, lastIdx, c);
+    if (firstIdx !== lastIdx) {
+      duplicateIdxs.push([firstIdx, lastIdx]);
     }
   });
-  console.log(iterable);
-  return result.map((c) => c[0]);
-};
 
-// better solution :D
-var uniqueInOrder = function (iterable) {
-  return [...iterable].filter((a, i) => a !== iterable[i - 1]);
-};
+  const result = [...new Set([...duplicateIdxs].map((p) => p.join("")))];
+  console.log(result.length);
+  console.log(new Set([...duplicateIdxs].map((p) => p.join(""))));
+  return result.length;
+}
+
+duplicateCount("aabBcde");
