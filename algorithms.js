@@ -810,3 +810,44 @@ getPassword(grid, directions);
 //   console.log(array);
 //   return array;
 // }
+
+// Implement the function unique_in_order which takes as argument a sequence and returns a list of items without any elements with the same value next to each other and preserving the original order of elements.
+
+// For example:
+
+// uniqueInOrder('AAAABBBCCDAABBB') == ['A', 'B', 'C', 'D', 'A', 'B']
+// uniqueInOrder('ABBCcAD')         == ['A', 'B', 'C', 'c', 'A', 'D']
+// uniqueInOrder([1,2,2,3,3])       == [1,2,3]
+
+var uniqueInOrder = function (iterable) {
+  let strArray;
+  if (typeof iterable[0] === "number") {
+    strArray = iterable;
+  } else if (
+    Array.isArray(iterable) &&
+    iterable.every((item) => typeof item === "string")
+  ) {
+    strArray = iterable;
+  } else {
+    strArray = iterable.split("");
+  }
+  let result = [];
+  strArray.forEach((c, i) => {
+    let arr = [];
+    if (i === strArray.length) {
+      return;
+    }
+    let newArr = [];
+    if (strArray[i] !== strArray[i + 1]) {
+      newArr.push(strArray[i]);
+      result.push(newArr);
+    }
+  });
+  console.log(iterable);
+  return result.map((c) => c[0]);
+};
+
+// better solution :D
+var uniqueInOrder = function (iterable) {
+  return [...iterable].filter((a, i) => a !== iterable[i - 1]);
+};
